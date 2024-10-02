@@ -1,6 +1,6 @@
 package Day18;
 
-public class OOPs {
+public class OOPs{
     //Private
     // private int private_num=10;
     // //Default
@@ -22,6 +22,5 @@ public class OOPs {
 }
 
 // Final on Method
-
     
-}
+
