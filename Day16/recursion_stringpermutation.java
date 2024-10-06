@@ -1,4 +1,4 @@
-package Day17;
+package Day16;
 
 public class recursion_stringpermutation {
     static void perm(String ques, String ans){
