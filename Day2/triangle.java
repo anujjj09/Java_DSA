@@ -4,7 +4,7 @@ public class triangle {
     public static void main(String[] args) {
         int n=6;
         for(int i =1;i<=n;i++){
-            //first trian  gle
+            //first triangle
             for (int k=1;k<=n-i;k++){
                 System.out.print("  ");
             }

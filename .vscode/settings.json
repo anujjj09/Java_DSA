@@ -1,3 +1,4 @@
 {
-    "java.debug.settings.onBuildFailureProceed": true
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.jdt.ls.java.home": "/Library/Java/JavaVirtualMachines/jdk-23.jdk/Contents/Home"
 }
