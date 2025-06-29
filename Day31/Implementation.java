@@ -3,7 +3,7 @@ package Day31;
 public class Implementation {
 
 	public static void main(String[] args) {
-		graph_1 g = new graph_1(7);
+		Graph_1 g = new Graph_1(7);
 
 		g.AddEdge(1, 4, 6);
 		g.AddEdge(1, 2, 10);
