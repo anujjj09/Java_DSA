@@ -57,6 +57,8 @@ public class functions {
         
     }
 
+    
+
 
     //create a function to print first n natural numbers
     static void nnos(int n){
