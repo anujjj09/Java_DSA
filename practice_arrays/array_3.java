@@ -19,27 +19,22 @@ public class array_3 {
     }
 
     //binary search in an array
-    public static void binarySearch (int [] arr, int x){
+    public static int binarySearch (int [] arr, int x){
         int low = 0;
-        int high = arr.length;
+        int high = arr.length-1;
         while(low<=high){
-            int mid = low + (high-low)/2;
+            int mid = low+(high-low)/2;
             if(arr[mid] == x){
-                System.out.println(i);
+                return mid;
             }
-            else if (arr[mid]>x){
-                low=mid+1;
-
+            else if (arr[mid] > x){
+                high = mid-1; 
             }
             else{
-                high=mid-1;
-                
+                low = mid+1;
             }
-
-            low++;
-            high--;
         }
-
+        return -1;
     }
 
     public static void main(String[] args) {
