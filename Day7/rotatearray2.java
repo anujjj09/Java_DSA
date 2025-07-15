@@ -1,6 +1,7 @@
 package Day7;
 
 public class rotatearray2 {
+    //leetcode - 189 : rotate an array
     static void reverse(int [] nums, int i ,int j){
         while(i<j){
             int temp = nums[i];
