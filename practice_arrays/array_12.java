@@ -1,6 +1,6 @@
 package practice_arrays;
 
-import java.util.Arrays;
+// import java.util.Arrays;
 
 public class array_12 {
     //Q 217 LEETCODE
@@ -23,13 +23,31 @@ public class array_12 {
 
     //approach 2: used Arrays.sort() to sort elements and compared every element to previous element and if matched, return true
     //time complexity : O(n logn)
-    public boolean containsDuplicate(int[] nums) {
-        Arrays.sort(nums);
-        for(int i = 1; i < nums.length ; i++){
-            if(nums[i] == nums[i-1]){
-                return true;
-            }
-        }
-        return false;
-    }
+    // public boolean containsDuplicate(int[] nums) {
+    //     Arrays.sort(nums);
+    //     for(int i = 1; i < nums.length ; i++){
+    //         if(nums[i] == nums[i-1]){
+    //             return true;
+    //         }
+    //     }
+    //     return false;
+    // }
+
+
+
+    //Q219 CONTAINS DUPLICATE II
+    //approach 1 : Brute force — check every pair (i, j) and return true if values match and |i - j| ≤ k.
+    // public boolean containsNearbyDuplicate(int[] nums, int k) {
+    //     for(int i = 0; i<nums.length ; i++){
+    //         for (int j = i+1; j<nums.length ; j++){
+    //             if(nums[i] == nums[j] && Math.abs(i-j) <= k){
+    //                 return true;
+    //             }
+    //         }
+    //     }
+    //     return false;
+    // }
+
+    //approach 2 : implement after learning HASHSET
+    
 }
