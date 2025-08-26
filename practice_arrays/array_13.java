@@ -1,7 +1,8 @@
 package practice_arrays;
 
 public class array_13 {
-    //we are given with distance as 50km and time as 2 hours, find out minimum time from 0-1000km/h to cover the distance
+    //Binary Search on SearchSpace
+    //Find the minimum speed (0–1000 km/h) required to cover 50 km in 2 hours using binary search.    
     public static boolean check(int mid , int time , int dist){
         int a = mid*time;
         if(a>= dist) return true;
