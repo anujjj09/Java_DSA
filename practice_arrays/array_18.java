@@ -1,6 +1,8 @@
 package practice_arrays;
 
 public class array_18 {
+    // Q540. Single Element in a Sorted Array
+    // approach: Linearly scan a sorted array, checking edges and neighbors, to find the single non-duplicate element 
     public int singleNonDuplicate(int[] nums) {
         int ans = -1;
         if (nums.length == 1){
