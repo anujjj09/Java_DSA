@@ -1,417 +1,967 @@
-import java.lang.classfile.components.ClassPrinter.ListNode;
 import java.util.*;
 
-import Day5.arrays_binarysearchlowerbound;
-
 public class LL {
+
+    // ============================================================
+    // 1. LINKED LIST BASICS
+    // ============================================================
+
     private Node head;
     private Node tail;
-
     private int size;
-    
 
-    public LL (){
+    public LL() {
         this.size = 0;
     }
 
-    
-// insert element at first position
-    public void insertFirst(int val){
+
+    // ============================================================
+    // 2. INSERTION
+    // ============================================================
+
+    // 2.1 Insert element at first position
+    public void insertFirst(int val) {
         Node node = new Node(val);
+
         node.next = head;
         head = node;
 
-        if (tail == null){
+        if (tail == null) {
             tail = head;
         }
+
         size++;
     }
 
-// insert element at last position
-    public void insertLast(int val){
-        if(tail == null){
+
+    // 2.2 Insert element at last position
+    public void insertLast(int val) {
+
+        if (tail == null) {
             insertFirst(val);
             return;
         }
-        
+
         Node node = new Node(val);
-        
-        tail.next =  node;
+
+        tail.next = node;
         tail = node;
+
         size++;
     }
 
-// insert element on a specific index
-    public void insert (int val , int index){
-        if(index == 0){
+
+    // 2.3 Insert element at a specific index
+    public void insert(int val, int index) {
+
+        if (index == 0) {
             insertFirst(val);
             return;
         }
 
-        if (index == size){
+        if (index == size) {
             insertLast(val);
             return;
         }
 
         Node temp = head;
-        for (int i = 1 ; i<index ; i++){
+
+        for (int i = 1; i < index; i++) {
             temp = temp.next;
         }
 
-        Node node = new Node(val , temp.next);
+        Node node = new Node(val, temp.next);
+
         temp.next = node;
         size++;
-
-
     }
 
 
-//delete element at first position
-    public int deleteFirst(){
+    // ============================================================
+    // 3. DELETION
+    // ============================================================
+
+    // 3.1 Delete first element
+    public int deleteFirst() {
+
         int val = head.value;
+
         head = head.next;
-        if (head == null){
+
+        if (head == null) {
             tail = null;
         }
 
         size--;
+
         return val;
     }
 
 
+    // 3.2 Delete last element
+    public int deleteLast() {
 
-//delete last element
-
-    public int deleteLast(){
-        if(size <= 1) return deleteFirst();
-
-        Node secondLast = get(size - 2);
-        int val = tail.value;
-        tail = secondLast;
-        tail.next = null;
-        return val;
-
-    }
-    public Node get(int index){
-        Node node = head;
-        for(int i = 0 ; i<index ; i++){
-            node = node.next;
-        }
-        return node;
-    }
-
-    public Node find (int value){
-        Node node = head;
-        while(node != null){
-            if(node.value == value){
-                return node;
-            }
-            node = node.next;
-        }
-        return null;
-
-    }
-// delete a particular index
-    public int delete(int index){
-        if(index == 0){
+        if (size <= 1) {
             return deleteFirst();
         }
 
-        if(index == size-1){
+        Node secondLast = get(size - 2);
+
+        int val = tail.value;
+
+        tail = secondLast;
+        tail.next = null;
+
+        size--;
+
+        return val;
+    }
+
+
+    // 3.3 Delete element at a specific index
+    public int delete(int index) {
+
+        if (index == 0) {
+            return deleteFirst();
+        }
+
+        if (index == size - 1) {
             return deleteLast();
         }
 
         Node prev = get(index - 1);
+
         int val = prev.next.value;
+
         prev.next = prev.next.next;
 
+        size--;
+
         return val;
-
-    }
-// print or display linked list
-    public void display (){
-        Node temp = head;
-        while(temp != null){
-            System.out.print(temp.value + "->");
-            temp = temp.next;
-        }
-        System.out.println("END");
-    }
-
-// insert using recursion
-    public void insertRec(int val, int index){
-        head = insertRec(val, index, head);
-
     }
 
 
-    private Node insertRec(int val, int index, Node node){
-        if (index == 0){
-            Node temp = new Node(val , node);
-            size++;
-            return temp;
+    // ============================================================
+    // 4. ACCESS / SEARCH
+    // ============================================================
+
+    // 4.1 Get node at a particular index
+    public Node get(int index) {
+
+        Node node = head;
+
+        for (int i = 0; i < index; i++) {
+            node = node.next;
         }
 
-        node.next = insertRec(val, index-1 , node.next);
         return node;
     }
 
 
+    // 4.2 Find a node containing a particular value
+    public Node find(int value) {
 
-    //question 83 
-    public void duplicates(){
         Node node = head;
 
-        while(node.next != null){
-            if(node.value == node.next.value){
+        while (node != null) {
+
+            if (node.value == value) {
+                return node;
+            }
+
+            node = node.next;
+        }
+
+        return null;
+    }
+
+
+    // ============================================================
+    // 5. DISPLAY
+    // ============================================================
+
+    public void display() {
+
+        Node temp = head;
+
+        while (temp != null) {
+            System.out.print(temp.value + "->");
+            temp = temp.next;
+        }
+
+        System.out.println("END");
+    }
+
+
+    // ============================================================
+    // 6. RECURSION
+    // ============================================================
+
+    // 6.1 Insert using recursion
+    public void insertRec(int val, int index) {
+        head = insertRec(val, index, head);
+    }
+
+
+    private Node insertRec(int val, int index, Node node) {
+
+        if (index == 0) {
+
+            Node temp = new Node(val, node);
+
+            size++;
+
+            return temp;
+        }
+
+        node.next = insertRec(val, index - 1, node.next);
+
+        return node;
+    }
+
+
+    // ============================================================
+    // 7. DUPLICATES
+    // LeetCode 83 - Remove Duplicates from Sorted List
+    // YOUR OWN LL NODE VERSION
+    // ============================================================
+
+    public void duplicates() {
+
+        Node node = head;
+
+        while (node.next != null) {
+
+            if (node.value == node.next.value) {
+
                 node.next = node.next.next;
                 size--;
-            }
-            else{
-                node = node.next;
 
+            } else {
+
+                node = node.next;
             }
         }
+
         tail = node;
         tail.next = null;
     }
 
 
-    // question 21
-    public static LL merge (LL first , LL second){
+    // ============================================================
+    // 8. MERGE TWO SORTED LINKED LISTS
+    // LeetCode 21 - YOUR OWN LL NODE VERSION
+    // ============================================================
+
+    public static LL merge(LL first, LL second) {
+
         Node f = first.head;
         Node s = second.head;
 
         LL ans = new LL();
 
-        while(f!= null && s!= null){
-            if(f.value < s.value){
+        while (f != null && s != null) {
+
+            if (f.value < s.value) {
+
                 ans.insertLast(f.value);
                 f = f.next;
-            }else{
+
+            } else {
+
                 ans.insertLast(s.value);
                 s = s.next;
             }
         }
 
-        while (f != null){
+        while (f != null) {
+
             ans.insertLast(f.value);
             f = f.next;
         }
 
-        while (s != null){
+        while (s != null) {
+
             ans.insertLast(s.value);
             s = s.next;
-        } 
+        }
+
+        return ans;
     }
 
-    //q21 leetcode version
-/**
- * Definition for singly-linked list.
- * public class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
- * }
- */
-// class Solution {
-//     public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-//         ListNode dummy = new ListNode();
-//         ListNode tail = dummy;
 
-//         while(list1 != null && list2 != null){
-//             if(list1.val < list2.val){
-//                 tail.next = list1;
-//                 list1 = list1.next;
-//                 tail = tail.next;
-//             }else{
-//                 tail.next = list2;
-//                 list2 = list2.next;
-//                 tail = tail.next;
-//             }
-//         }
-
-//         while(list1 != null){
-//             tail.next = list1;
-//             list1 = list1.next;
-//             tail = tail.next;
-//         }
-
-//         while(list2 != null){
-//             tail.next = list2;
-//             list2 = list2.next;
-//             tail = tail.next;
-//         }
-//         return dummy.next;
-
-
-//     }
-// }
-
-
-
-// q 141
-/**
- * Definition for singly-linked list.
- * class ListNode {
- *     int val;
- *     ListNode next;
- *     ListNode(int x) {
- *         val = x;
- *         next = null;
- *     }
- * }
- */
-// public class Solution {
-    // public boolean hasCycle(ListNode head) {
-        // ListNode fast = head;
-        // ListNode slow = head;
-
-        // while(fast != null && fast.next != null){
-        //     fast = fast.next.next;
-        //     slow = slow.next;
-        //     if(slow == fast){
-        //         return true;
-        //     }
-        // }
-        // return false;
+    // ============================================================
+    // 9. LEETCODE PRACTICE
+    //
+    // IMPORTANT:
+    // The following problems use LeetCode's ListNode.
+    //
+    // They are COMMENTED OUT because they are not part of
+    // your custom LL class.
+    //
+    // LeetCode provides:
+    //
+    // class ListNode {
+    //     int val;
+    //     ListNode next;
     // }
-// }
-
-//find length of a cycle
-//     public int LengthCycle(ListNode head){
-//         ListNode fast = head;
-//         ListNode slow = head;
-
-//         while(fast != null && fast.next != null){
-//             fast = fast.next.next;
-//             slow = slow.next;
-//             if(slow == fast){
-//                 // calculate length
-//                 ListNode temp = slow;
-//                 int length = 0;
-//                 do{
-//                     temp = temp.next;
-//                     length++;
-//                 } while(temp != slow);
-//                 return length;
-//             }
-//         }
-//         return 0;
-//     }
+    //
+    // ============================================================
 
 
-// //q142 length of cycle
+    // ------------------------------------------------------------
+    // 9.1 LeetCode 21 — Merge Two Sorted Lists
+    // ------------------------------------------------------------
 
-//     public ListNode detectCycle(ListNode head) {
-//         int length = 0;
-//         ListNode fast = head;
-//         ListNode slow = head;
+    /*
+    class Solution {
 
-//         while(fast != null && fast.next != null){
-//             fast = fast.next.next;
-//             slow = slow.next;
-//             if(slow == fast){
-//                 length = LengthCycle(slow);
-//                 break;
-//             }
+        public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
 
-//         }
-        
-        
-//         //find start node
-//         ListNode f = head;
-//         ListNode s = head;
-//         if (length==0){
-//             return null;
+            ListNode dummy = new ListNode();
+            ListNode tail = dummy;
 
-//         }
+            while (list1 != null && list2 != null) {
 
-//         while(length>0){
-//             s = s.next;
-//             length--;
+                if (list1.val < list2.val) {
 
-//         }
+                    tail.next = list1;
+                    list1 = list1.next;
+                    tail = tail.next;
 
-//         // keep moving both forward one by one till meet
+                } else {
 
-//         while(f != s){
-//             f = f.next;
-//             s=s.next;
+                    tail.next = list2;
+                    list2 = list2.next;
+                    tail = tail.next;
+                }
+            }
 
-//         }
-//         return s;
-        
-//     }
+            while (list1 != null) {
 
+                tail.next = list1;
+                list1 = list1.next;
+                tail = tail.next;
+            }
 
+            while (list2 != null) {
 
-//q 202 HAPPY NUMBER
-    // public boolean isHappy(int n) {
-    //     int slow = n;
-    //     int fast = n;
+                tail.next = list2;
+                list2 = list2.next;
+                tail = tail.next;
+            }
 
-        
-    //     do{
-    //         slow = findSquare(slow);
-    //         fast = findSquare(findSquare(fast));
-
-    //     }while(slow!= fast);
-
-    //     if(slow == 1){
-    //         return true;
-    //     } return false;
+            return dummy.next;
+        }
+    }
+    */
 
 
+    // ------------------------------------------------------------
+    // 9.2 LeetCode 141 — Linked List Cycle
+    // ------------------------------------------------------------
 
-    // }
+    /*
+    public boolean hasCycle(ListNode head) {
 
-    // private int findSquare(int number){
-    //     int ans = 0;
-    //     while(number > 0){
-    //         int rem = number % 10;
-    //         ans = rem*rem;
-    //         number /= 10;
+        ListNode fast = head;
+        ListNode slow = head;
 
-    //     }
-    //     return ans;
-    // }
+        while (fast != null && fast.next != null) {
 
-//q876 middle of LL
-    // public ListNode middleNode(ListNode head) {
-    //     ListNode slow = head;
-    //     ListNode fast = head;
+            fast = fast.next.next;
+            slow = slow.next;
 
-    //     while(fast != null &&  fast.next != null){
-    //         slow = slow.next;
-    //         fast = fast.next.next;
-        
-    //     }
-    //     return slow;
-    // }
+            if (slow == fast) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+    */
 
 
-// q148 sort LL using merge/bubble sort
-    
+    // ------------------------------------------------------------
+    // 9.3 Find Length of Cycle
+    // ------------------------------------------------------------
+
+    /*
+    public int lengthCycle(ListNode head) {
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        while (fast != null && fast.next != null) {
+
+            fast = fast.next.next;
+            slow = slow.next;
+
+            if (slow == fast) {
+
+                ListNode temp = slow;
+                int length = 0;
+
+                do {
+
+                    temp = temp.next;
+                    length++;
+
+                } while (temp != slow);
+
+                return length;
+            }
+        }
+
+        return 0;
+    }
+    */
 
 
+    // ------------------------------------------------------------
+    // 9.4 LeetCode 142 — Linked List Cycle II
+    // ------------------------------------------------------------
+
+    /*
+    public ListNode detectCycle(ListNode head) {
+
+        int length = 0;
+
+        ListNode fast = head;
+        ListNode slow = head;
+
+        // Find meeting point
+        while (fast != null && fast.next != null) {
+
+            fast = fast.next.next;
+            slow = slow.next;
+
+            if (slow == fast) {
+
+                length = lengthCycle(slow);
+                break;
+            }
+        }
 
 
-    private class Node{
+        // No cycle
+        if (length == 0) {
+            return null;
+        }
+
+
+        // Move second pointer 'length' steps ahead
+        ListNode f = head;
+        ListNode s = head;
+
+        while (length > 0) {
+
+            s = s.next;
+            length--;
+        }
+
+
+        // Move both until they meet
+        while (f != s) {
+
+            f = f.next;
+            s = s.next;
+        }
+
+        return s;
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.5 LeetCode 202 — Happy Number
+    // ------------------------------------------------------------
+
+    /*
+    public boolean isHappy(int n) {
+
+        int slow = n;
+        int fast = n;
+
+        do {
+
+            slow = findSquare(slow);
+            fast = findSquare(findSquare(fast));
+
+        } while (slow != fast);
+
+        return slow == 1;
+    }
+
+
+    private int findSquare(int number) {
+
+        int ans = 0;
+
+        while (number > 0) {
+
+            int rem = number % 10;
+
+            ans += rem * rem;
+
+            number /= 10;
+        }
+
+        return ans;
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.6 LeetCode 876 — Middle of the Linked List
+    // ------------------------------------------------------------
+
+    /*
+    public ListNode middleNode(ListNode head) {
+
+        ListNode slow = head;
+        ListNode fast = head;
+
+        while (fast != null && fast.next != null) {
+
+            slow = slow.next;
+            fast = fast.next.next;
+        }
+
+        return slow;
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.7 LeetCode 148 — Sort List
+    // MERGE SORT
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode sortList(ListNode head) {
+
+            if (head == null || head.next == null) {
+                return head;
+            }
+
+            ListNode mid = getMid(head);
+
+            ListNode left = sortList(head);
+            ListNode right = sortList(mid);
+
+            return merge(left, right);
+        }
+
+
+        public ListNode getMid(ListNode head) {
+
+            ListNode midPrev = null;
+
+            while (head != null && head.next != null) {
+
+                midPrev = (midPrev == null)
+                        ? head
+                        : midPrev.next;
+
+                head = head.next.next;
+            }
+
+            ListNode mid = midPrev.next;
+
+            midPrev.next = null;
+
+            return mid;
+        }
+
+
+        public ListNode merge(ListNode list1, ListNode list2) {
+
+            ListNode dummy = new ListNode();
+            ListNode tail = dummy;
+
+            while (list1 != null && list2 != null) {
+
+                if (list1.val < list2.val) {
+
+                    tail.next = list1;
+                    list1 = list1.next;
+
+                } else {
+
+                    tail.next = list2;
+                    list2 = list2.next;
+                }
+
+                tail = tail.next;
+            }
+
+            while (list1 != null) {
+
+                tail.next = list1;
+                list1 = list1.next;
+                tail = tail.next;
+            }
+
+            while (list2 != null) {
+
+                tail.next = list2;
+                list2 = list2.next;
+                tail = tail.next;
+            }
+
+            return dummy.next;
+        }
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.8 LeetCode 206 — Reverse Linked List
+    // ------------------------------------------------------------
+
+
+    // 9.8.1 Recursive Reverse
+    /*
+    private void reverse(Node node) {
+
+        if (node == tail) {
+
+            head = tail;
+            return;
+        }
+
+        reverse(node.next);
+
+        tail.next = node;
+        tail = node;
+        tail.next = null;
+    }
+    */
+
+
+    // 9.8.2 Iterative / In-Place Reverse
+    /*
+    public ListNode reverseList(ListNode head) {
+
+        if (head == null) {
+            return head;
+        }
+
+        ListNode prev = null;
+        ListNode pres = head;
+        ListNode next = head.next;
+
+        while (pres != null) {
+
+            pres.next = prev;
+            prev = pres;
+            pres = next;
+
+            if (next != null) {
+                next = next.next;
+            }
+        }
+
+        return prev;
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.9 LeetCode 92 — Reverse Linked List II
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode reverseBetween(
+                ListNode head,
+                int left,
+                int right) {
+
+            if (head == null || left == right) {
+                return head;
+            }
+
+            // Skip first left - 1 nodes
+            ListNode current = head;
+            ListNode prev = null;
+
+            for (
+                int i = 0;
+                i < left - 1 && current != null;
+                i++
+            ) {
+
+                prev = current;
+                current = current.next;
+            }
+
+
+            ListNode last = prev;
+            ListNode newEnd = current;
+
+
+            // Reverse between left and right
+            ListNode next = current.next;
+
+            for (
+                int i = 0;
+                i < right - left + 1 && current != null;
+                i++
+            ) {
+
+                current.next = prev;
+                prev = current;
+                current = next;
+
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+
+            // Connect reversed portion
+            if (last != null) {
+
+                last.next = prev;
+
+            } else {
+
+                head = prev;
+            }
+
+
+            // Connect end of reversed portion
+            newEnd.next = current;
+
+            return head;
+        }
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.10 LeetCode 234 — Palindrome Linked List
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode middleNode(ListNode head) {
+
+            ListNode slow = head;
+            ListNode fast = head;
+
+            while (fast != null && fast.next != null) {
+
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+            return slow;
+        }
+
+
+        public ListNode reverseList(ListNode head) {
+
+            if (head == null) {
+                return head;
+            }
+
+            ListNode prev = null;
+            ListNode pres = head;
+            ListNode next = head.next;
+
+            while (pres != null) {
+
+                pres.next = prev;
+                prev = pres;
+                pres = next;
+
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            return prev;
+        }
+
+
+        public boolean isPalindrome(ListNode head) {
+
+            ListNode mid = middleNode(head);
+
+            ListNode headSecond = reverseList(mid);
+
+            ListNode rereverseHead = headSecond;
+
+
+            // Compare both halves
+            while (head != null && headSecond != null) {
+
+                if (head.val != headSecond.val) {
+                    break;
+                }
+
+                head = head.next;
+                headSecond = headSecond.next;
+            }
+
+
+            // Restore second half
+            reverseList(rereverseHead);
+
+            return head == null || headSecond == null;
+        }
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.11 LeetCode 143 — Reorder List
+    //
+    // Pattern:
+    //
+    // 1. Find second half
+    // 2. Split
+    // 3. Reverse second half
+    // 4. Merge alternately
+    //
+    // Pointer rule:
+    // SAVE → CONNECT → MOVE
+    //
+    // Example:
+    //
+    // 1 → 2 → 3 → 4 → 5 → 6 → 7
+    //
+    // Split:
+    // 1 → 2 → 3 → 4 | 5 → 6 → 7
+    //
+    // Reverse:
+    // 1 → 2 → 3 → 4 | 7 → 6 → 5
+    //
+    // Merge:
+    // 1 → 7 → 2 → 6 → 3 → 5 → 4
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode getMid(ListNode head) {
+
+            ListNode slow = head;
+            ListNode fast = head;
+
+            if (head == null || head.next == null) {
+                return head;
+            }
+
+            while (fast != null && fast.next != null) {
+
+                slow = slow.next;
+                fast = fast.next.next;
+            }
+
+
+            // Save second half
+            ListNode secHead = slow.next;
+
+            // Cut first half
+            slow.next = null;
+
+            return secHead;
+        }
+
+
+        public ListNode reverseList(ListNode head) {
+
+            if (head == null) {
+                return head;
+            }
+
+            ListNode prev = null;
+            ListNode pres = head;
+            ListNode next = head.next;
+
+            while (pres != null) {
+
+                pres.next = prev;
+                prev = pres;
+                pres = next;
+
+                if (next != null) {
+                    next = next.next;
+                }
+            }
+
+            return prev;
+        }
+
+
+        public void reorderList(ListNode head) {
+
+            if (head == null || head.next == null) {
+                return;
+            }
+
+
+            // Find and split second half
+            ListNode mid = getMid(head);
+
+
+            // Reverse second half
+            ListNode secHead = reverseList(mid);
+
+
+            // Merge alternately
+            while (head != null && secHead != null) {
+
+                // Save first half's next
+                ListNode temp = head.next;
+
+                // Connect first → second
+                head.next = secHead;
+
+                // Move first pointer
+                head = temp;
+
+
+                // Save second half's next
+                temp = secHead.next;
+
+                // Connect second → first
+                secHead.next = head;
+
+                // Move second pointer
+                secHead = temp;
+            }
+        }
+    }
+    */
+
+
+    // ============================================================
+    // 10. NODE CLASS
+    // ============================================================
+
+    private class Node {
+
         private int value;
         private Node next;
 
-        public Node (int value){
+
+        public Node(int value) {
             this.value = value;
         }
 
-        public Node (int value , Node next){
-            this.value=value;
+
+        public Node(int value, Node next) {
+            this.value = value;
             this.next = next;
         }
-
-
     }
 }
