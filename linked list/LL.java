@@ -943,6 +943,172 @@ public class LL {
     }
     */
 
+    // ------------------------------------------------------------
+    // 9.12 LeetCode 25 — Reverse Nodes in k-Group
+    //
+    // Pattern:
+    //
+    // 1. Check if k nodes are available
+    // 2. Reverse k nodes
+    // 3. Connect previous portion
+    // 4. Connect next portion
+    // 5. Repeat
+    //
+    // Example:
+    //
+    // 1 → 2 → 3 → 4 → 5
+    // k = 2
+    //
+    // 2 → 1 → 4 → 3 → 5
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode reverseKGroup(ListNode head, int k) {
+
+            if (k <= 1 || head == null) {
+                return head;
+            }
+
+            ListNode current = head;
+            ListNode prev = null;
+
+            while (true) {
+
+                // Check if k nodes are available
+                ListNode next = current;
+
+                for (int i = 0; i < k; i++) {
+
+                    if (next == null) {
+                        return head;
+                    }
+
+                    next = next.next;
+                }
+
+
+                ListNode last = prev;
+                ListNode newEnd = current;
+
+
+                // Reverse k nodes
+                next = current.next;
+
+                for (int i = 0; i < k; i++) {
+
+                    current.next = prev;
+                    prev = current;
+                    current = next;
+
+                    if (next != null) {
+                        next = next.next;
+                    }
+                }
+
+
+                // Connect reversed portion
+                if (last != null) {
+
+                    last.next = prev;
+
+                } else {
+
+                    head = prev;
+                }
+
+
+                // Connect end of reversed portion
+                newEnd.next = current;
+
+                if (current == null) {
+                    break;
+                }
+
+
+                // Prepare for next group
+                prev = newEnd;
+            }
+
+            return head;
+        }
+    }
+    */
+
+
+    // ------------------------------------------------------------
+    // 9.13 LeetCode 61 — Rotate List
+    //
+    // Pattern:
+    //
+    // 1. Find last node and length
+    // 2. Make list circular
+    // 3. Calculate effective rotations
+    // 4. Find new last node
+    // 5. Break the circle
+    //
+    // Example:
+    //
+    // 1 → 2 → 3 → 4 → 5
+    // k = 2
+    //
+    // 4 → 5 → 1 → 2 → 3
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode rotateRight(ListNode head, int k) {
+
+            if (k <= 0 || head == null || head.next == null) {
+                return head;
+            }
+
+
+            // Find last node and length
+            ListNode last = head;
+            int length = 1;
+
+            while (last.next != null) {
+
+                last = last.next;
+                length++;
+            }
+
+
+            // Make the list circular
+            last.next = head;
+
+
+            // Remove unnecessary full rotations
+            int rotations = k % length;
+
+
+            // Find position of new last node
+            int skip = length - rotations;
+
+            ListNode newLast = head;
+
+            for (int i = 0; i < skip - 1; i++) {
+
+                newLast = newLast.next;
+            }
+
+
+            // Node after newLast becomes new head
+            head = newLast.next;
+
+
+            // Break the circle
+            newLast.next = null;
+
+
+            return head;
+        }
+    }
+    */
+
 
     // ============================================================
     // 10. NODE CLASS
