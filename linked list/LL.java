@@ -1110,6 +1110,112 @@ public class LL {
     */
 
 
+    // ------------------------------------------------------------
+    // 9.13 LeetCode 61 — Rotate List
+    //
+    // Pattern:
+    //
+    // 1. Find last node and length
+    // 2. Make the list circular
+    // 3. Calculate effective rotations using k % length
+    // 4. Find the new last node
+    // 5. Break the circle
+    //
+    // Example:
+    //
+    // 1 → 2 → 3 → 4 → 5
+    // k = 2
+    //
+    // After rotation:
+    //
+    // 4 → 5 → 1 → 2 → 3
+    //
+    // Important:
+    //
+    // k can be greater than length.
+    //
+    // Example:
+    //
+    // length = 5
+    // k = 7
+    //
+    // rotations = 7 % 5 = 2
+    //
+    // So we only need to rotate 2 times.
+    // ------------------------------------------------------------
+
+    /*
+    class Solution {
+
+        public ListNode rotateRight(ListNode head, int k) {
+
+            // Empty list, single node, or no rotation
+            if (head == null || head.next == null || k == 0) {
+                return head;
+            }
+
+
+            // Find last node and length
+            ListNode last = head;
+            int length = 1;
+
+            while (last.next != null) {
+
+                last = last.next;
+                length++;
+            }
+
+
+            // Make the list circular
+            //
+            // 1 → 2 → 3 → 4 → 5
+            // ↑                 ↓
+            // └─────────────────┘
+            last.next = head;
+
+
+            // Remove unnecessary full rotations
+            //
+            // Example:
+            // length = 5
+            // k = 7
+            //
+            // rotations = 7 % 5 = 2
+            int rotations = k % length;
+
+
+            // Find the new last node
+            //
+            // If length = 5 and rotations = 2:
+            //
+            // skip = 5 - 2 = 3
+            //
+            // New last node = 3
+            // New head = 4
+            int skip = length - rotations;
+
+            ListNode newLast = head;
+
+            for (int i = 0; i < skip - 1; i++) {
+
+                newLast = newLast.next;
+            }
+
+
+            // Node after newLast becomes the new head
+            head = newLast.next;
+
+
+            // Break the circular connection
+            newLast.next = null;
+
+
+            return head;
+        }
+    }
+    */
+
+
     // ============================================================
     // 10. NODE CLASS
     // ============================================================
